@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hogozat/core/shared_preferences.dart';
 import 'package:meta/meta.dart';
 
 part 'my_trips_state.dart';
@@ -8,6 +9,8 @@ class MyTripsCubit extends Cubit<MyTripsState> {
   MyTripsCubit() : super(MyTripsInitial());
 
   final fireStore = FirebaseFirestore.instance;
+  int time = DateTime.now().microsecondsSinceEpoch;
+  String uid = PreferenceUtils.getString(PrefKeys.uid);
   Map<String, dynamic> upComingMap = {
     'data': [
       // {
@@ -114,11 +117,12 @@ class MyTripsCubit extends Cubit<MyTripsState> {
 
   getData() {
     fireStore
-        .collection('myTrips')
+        .collection('upComingMap').where('userId',isEqualTo: uid)
         .get()
         .then((value) {
-      value.docs.forEach((doc) {
-        upComingMap['data'] = doc.data()['upComingMap'];
+          value.docs.forEach((doc) {
+            print(doc.data());
+        upComingMap['data'].add(doc.data());
       });
       emit(MyTripsSuccessState());
     })

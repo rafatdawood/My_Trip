@@ -10,7 +10,6 @@ class PayOptionsCubit extends Cubit<PayOptionsState> {
 
   final fireStore = FirebaseFirestore.instance;
   final uid = PreferenceUtils.getString(PrefKeys.uid);
-
   Map<String, dynamic> tripData = {};
   int totalPrice = 0;
   List tripsData = [];
@@ -35,12 +34,21 @@ class PayOptionsCubit extends Cubit<PayOptionsState> {
       emit(PaymentMethodFailureState('No payment method has been selected'));
     } else {
       for (var i in tripsData) {
-        fireStore
-            .collection('availableTrips')
-            .doc(i['tripId'])
-            .update({'booked': FieldValue.arrayUnion(i['seatsNumber'])});
-        fireStore.collection('myTrips').doc(uid).update({
-          'upComingMap': FieldValue.arrayUnion([i])
+        fireStore.collection('availableTrips').doc(i['tripId']).update(
+            {'booked': FieldValue.arrayUnion(i['seatsNumber'])}).then((value) {
+          int time = DateTime.now().microsecondsSinceEpoch;
+          fireStore.collection('upComingMap').doc('${time}-${uid}').set({
+            'seatsNumber': i['seatsNumber'],
+            'price': i['price'],
+            'from': i['from'],
+            'fromStation': i['fromStation'],
+            'toStation': i['toStation'],
+            'departureDate': i['departureDate'],
+            'tripId': i['tripId'],
+            'selectedMap': i['selectedMap'],
+            'to': i['to'],
+            'userId': uid,
+          });
         });
       }
       emit(PaymentMethodSuccessState('Payment method is done'));

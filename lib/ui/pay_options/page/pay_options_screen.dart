@@ -24,7 +24,7 @@ class _PayOptionsScreenState extends State<PayOptionsScreen> {
   @override
   void initState() {
     super.initState();
-    cubit.getData(widget.tripsData, widget.totalPrice);
+    cubit.getData(widget.tripsData, widget.totalPrice,);
   }
 
   @override
