@@ -37,7 +37,7 @@ class PayOptionsCubit extends Cubit<PayOptionsState> {
         fireStore.collection('availableTrips').doc(i['tripId']).update(
             {'booked': FieldValue.arrayUnion(i['seatsNumber'])}).then((value) {
           int time = DateTime.now().microsecondsSinceEpoch;
-          fireStore.collection('upComingMap').doc('${time}-${uid}').set({
+          fireStore.collection('upComingMap').doc('$time-$uid').set({
             'seatsNumber': i['seatsNumber'],
             'price': i['price'],
             'from': i['from'],
