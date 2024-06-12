@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "126670503696",
+    "project_id": "gozat-c8aab",
+    "storage_bucket": "gozat-c8aab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126670503696:android:1aa7eafee785688c562f95",
+        "android_client_info": {
+          "package_name": "com.hogozat.egy.hogozat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUKLju4OtwA9CEgBqdZ2K_29owLksdEcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
